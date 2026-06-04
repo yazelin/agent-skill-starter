@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Sync (no third-party deps; creates the env)
+        run: uv sync
+      - name: Skill structure + extractor checks (no API key)
+        run: uv run python client_smoke_test.py

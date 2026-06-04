@@ -1,0 +1,9 @@
+[project]
+name = "agent-skill-starter"
+version = "0.1.0"
+description = "Learn to build an Agent Skill: from ad-hoc prompting (Part 1) to a packaged, auto-triggering Claude Code skill with a deterministic helper script (Part 2)."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+package = false

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-Hant-TW" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Skill 入門模板｜快速了解</title>
+<meta name="description" content="用最小範例看懂怎麼做一個 Agent Skill：把一段 ad-hoc prompt 打包成自動觸發的 Claude Code Skill，精確的部分交給腳本。完整逐步教學在實戰手冊。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#2dd4bf; --brand-solid:#14b8a6;
+  --bg:#08130f; --bg2:#040a07; --panel:rgba(255,255,255,.05); --border:rgba(255,255,255,.12);
+  --text:#f1eef9; --muted:#a79fbe; --code-bg:#0b0716; --code-text:#d8d2ec; --ok:#7fdca0;
+}
+html[data-theme="light"]{
+  --brand:#0f766e; --brand-solid:#0d5f59;
+  --bg:#f0faf7; --bg2:#dcf2ec; --panel:#ffffff; --border:rgba(28,18,52,.12);
+  --text:#1c1630; --muted:#5b5470; --code-bg:#17132b; --code-text:#e7e2f6; --ok:#1f8a4c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 82% -8%, color-mix(in srgb,var(--brand) 22%,transparent), transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text);font-family:'Noto Sans TC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.8;min-height:100vh}
+a{color:var(--brand);text-decoration:none}
+a:hover{filter:brightness(1.15)}
+.wrap{max-width:880px;margin:0 auto;padding:20px 22px 90px}
+.topbar{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--border);box-shadow:0 6px 18px -14px rgba(0,0,0,.5)}
+.topbar-inner{max-width:880px;margin:0 auto;padding:12px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.brand{font-weight:900;color:var(--text)}
+.toprow{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;background:var(--panel);color:var(--text);cursor:pointer}
+.btn.primary{background:var(--brand-solid);border-color:transparent;color:#fff}
+.eyebrow{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--brand);font-weight:600}
+h1{font-size:clamp(32px,6vw,56px);line-height:1.08;margin:14px 0 16px;font-weight:900;letter-spacing:-.02em}
+.lead{font-size:clamp(18px,2.4vw,22px);color:var(--text);max-width:680px;margin:0 0 10px}
+.sub{color:var(--muted);max-width:680px;margin:0 0 24px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;padding:2px 0 10px;margin-bottom:6px}
+.nav a{font-size:13px;border:1px solid var(--border);border-radius:999px;padding:6px 12px;background:var(--panel);color:var(--muted);font-weight:500}
+.nav a:hover{color:var(--brand);border-color:var(--brand)}
+section{border:1px solid var(--border);border-radius:20px;background:var(--panel);padding:26px 26px 28px;margin:16px 0;scroll-margin-top:74px}
+h2{font-size:26px;margin:0 0 8px;letter-spacing:-.01em}
+.tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);font-weight:600}
+p,li{color:var(--text)}
+.muted{color:var(--muted)}
+ul{padding-left:22px;margin:10px 0}
+li{margin:6px 0}
+pre{background:var(--code-bg);color:var(--code-text);border-radius:12px;padding:15px 16px;overflow:auto;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.65;margin:10px 0}
+code{font-family:'JetBrains Mono',monospace}
+.step{font-size:13px;color:var(--muted);margin:14px 0 4px;font-weight:600}
+.ok{margin-top:12px;border-left:4px solid var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent);padding:10px 14px;border-radius:8px;color:var(--text)}
+.contrast{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.contrast th,.contrast td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top}
+.contrast th{background:color-mix(in srgb,var(--brand) 16%,transparent);font-weight:700}
+.chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px}
+.ch{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:color-mix(in srgb,var(--brand) 5%,transparent);color:var(--text);font-weight:600}
+.ch:hover{border-color:var(--brand)}
+.ch-n{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--brand);font-weight:700;min-width:22px}
+.get{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+.get-card{flex:1 1 240px;border:1px solid var(--border);border-radius:14px;padding:18px;background:color-mix(in srgb,var(--brand) 6%,transparent)}
+.get-card h3{margin:0 0 6px;font-size:17px}
+.footer{margin-top:36px;color:var(--muted);font-size:13px;text-align:center}
+.theme-toggle{font-family:'Noto Sans TC',sans-serif}
+@media(max-width:640px){.wrap{padding:16px 16px 70px}section{padding:20px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">← Agent Skill</a>
+    <div class="toprow">
+      <a class="btn" href="https://github.com/yazelin/agent-skill-starter" target="_blank" rel="noopener">GitHub</a>
+      <button class="btn theme-toggle" id="themeBtn" type="button" aria-label="切換深淺色">淺色</button>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Agent Skill 入門 · 5 分鐘看懂</div>
+    <h1>把一段 prompt 變成一個 Skill</h1>
+    <p class="lead">Agent Skill 就是「寫一次、自動觸發、把精確的活交給腳本」。用一個最小範例看懂怎麼<strong>定義 SKILL.md、讓它自動被叫用、用腳本做確定性抽取</strong>，並親手跑出每次都一致的結果。</p>
+    <p class="sub">這頁讓你 5 分鐘知道這是什麼、能做出什麼、真的會動。要逐章、踩雷、改造、FAQ 的完整版，在實戰手冊裡。</p>
+    <div class="cta">
+      <a class="btn primary" href="#quickstart">5 分鐘跑起來 ↓</a>
+      <a class="btn" href="https://github.com/yazelin/agent-skill-starter" target="_blank" rel="noopener">看 GitHub 原始碼</a>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="#what">這是什麼</a>
+    <a href="#outcomes">你會做出什麼</a>
+    <a href="#quickstart">5 分鐘跑起來</a>
+    <a href="#part2">Part 2 對照</a>
+    <a href="#chapters">完整章節</a>
+    <a href="#get">拿完整手冊</a>
+  </nav>
+
+  <section id="what">
+    <div class="tag">What</div>
+    <h2>這是什麼、解決什麼</h2>
+    <p>你已經有一套「整理筆記」的做法，但每次都得把同一長串 prompt 重貼一遍，結果還時好時壞 —— 今天抓到 5 個數字、明天抓到 4 個，日期、金額、@提及這種該完整不漏的東西，靠模型用眼睛看偶爾就漏掉。</p>
+    <p>這個範本教你做一個 <strong>Agent Skill（Claude Code Skill）</strong>：範例 skill 叫 <code>structured-summary</code>，把雜亂筆記整理成固定格式的摘要。它把做法<strong>打包成一次寫好、會自動觸發</strong>的能力，並把「需要精確」的抽取交給一支確定性腳本。小到你能一眼讀完，剛好夠看懂一個 skill 的每一個零件。</p>
+  </section>
+
+  <section id="outcomes">
+    <div class="tag">Outcomes</div>
+    <h2>你會做出什麼</h2>
+    <ul>
+      <li>看懂一個 Skill 就是 <code>SKILL.md</code>（YAML frontmatter 的 name／description 讓它自動觸發）+ <code>scripts/</code>（確定性腳本）+ <code>references/</code>（漸進式揭露的輸出格式）。</li>
+      <li>用 <code>scripts/extract.py</code> 做確定性抽取：dates／mentions／todos／numbers，同樣輸入永遠同樣輸出。</li>
+      <li>掌握核心心法：<strong>需要判斷的留給模型，需要精確的交給腳本。</strong></li>
+      <li>用免 key 的確定性測試驗證 skill：frontmatter 與引用檔存在、腳本抽取結果正確。</li>
+      <li>看懂從 ad-hoc prompt（Part 1）演進到打包成 Skill（Part 2）的對照，知道每一步在解決哪個痛點。</li>
+    </ul>
+  </section>
+
+  <section id="quickstart">
+    <div class="tag">Quick Win</div>
+    <h2>5 分鐘跑起來</h2>
+    <p class="muted">需要 <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a>。不需要任何 API key。Ubuntu 與 Windows 皆可。</p>
+    <div class="step"><strong>1.</strong> 取得並安裝</div>
+    <pre><code>git clone https://github.com/yazelin/agent-skill-starter.git
+cd agent-skill-starter
+uv sync</code></pre>
+    <div class="step"><strong>2.</strong> 跑 smoke test（最快的驗證）</div>
+    <pre><code>uv run python client_smoke_test.py</code></pre>
+    <div class="step"><strong>3.</strong> 真實輸出</div>
+    <pre><code>== tests/test_skill_structure.py ==
+OK: skill structure test passed
+
+== tests/test_extract.py ==
+OK: extract test passed
+{"dates": ["2026-06-04", "2026/06/10"], "mentions": ["小華", "阿明"], "todos": ["@阿明 在 2026/06/10 前補出貨報表", "追蹤一筆 NT$12,000 的退款", "跟供應商確認下週要採購的 5 台 機器人手臂"], "numbers": ["320 台", "98%", "2 件", "NT$12,000", "5 台", "NT$ 250,000"]}
+
+OK: all checks passed</code></pre>
+    <div class="ok">成功長這樣：看到 <strong>OK: all checks passed</strong>，就代表 skill 結構（frontmatter + 引用檔）跟確定性腳本整條都跑通了。</div>
+    <div class="step"><strong>4.</strong> 親眼看腳本的確定性抽取（對 <code>part1_adhoc/sample_input.txt</code>）</div>
+    <pre><code>uv run python skills/structured-summary/scripts/extract.py part1_adhoc/sample_input.txt</code></pre>
+    <pre><code>{
+  "dates": ["2026-06-04", "2026/06/10"],
+  "mentions": ["小華", "阿明"],
+  "todos": ["@阿明 在 2026/06/10 前補出貨報表", "追蹤一筆 NT$12,000 的退款", "跟供應商確認下週要採購的 5 台 機器人手臂"],
+  "numbers": ["320 台", "98%", "2 件", "NT$12,000", "5 台", "NT$ 250,000"]
+}</code></pre>
+  </section>
+
+  <section id="part2">
+    <div class="tag">Part 2 · 對照組</div>
+    <h2>從 ad-hoc prompt 演進到一個 Skill</h2>
+    <p>前半段（Part 1）是「還沒做成 skill」的做法：每次要整理筆記，就把一長串指示貼給 AI，後面接上原始文字。會動，但每次重貼、結果不一致、精確欄位靠模型用眼睛抓。後半段（Part 2）把同一套做法<strong>打包成一個 Skill</strong>，體會「寫一次、自動觸發、精確的部分交給腳本」。</p>
+    <table class="contrast">
+      <tr><th>面向</th><th>Part 1 · ad-hoc prompt</th><th>Part 2 · Skill</th></tr>
+      <tr><td>每次怎麼啟動</td><td>手動重貼一長串指示</td><td>frontmatter 的 description 自動觸發</td></tr>
+      <tr><td>精確欄位（日期／數字／提及）</td><td>靠模型用眼睛抓，偶爾漏</td><td>確定性腳本抽取，同輸入同輸出</td></tr>
+      <tr><td>輸出格式</td><td>每次可能跑掉</td><td>references/format.md 固定版面</td></tr>
+    </table>
+    <p>核心一句：<strong>需要判斷的留給模型，需要精確的交給腳本。</strong>同一份確定性測試對 skill 結構與腳本抽取都過，證明每次行為一致。完整對照在 <a href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/08-from-prompt-to-skill.md" target="_blank" rel="noopener">docs/08</a>。</p>
+  </section>
+
+  <section id="chapters">
+    <div class="tag">All Chapters</div>
+    <h2>完整章節（想一章一章讀完整版）</h2>
+    <p class="muted">這頁是快速了解；下面每一章都是完整內容，在 GitHub 上點開就能讀。</p>
+    <div class="chapters">
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/00-overview.md" target="_blank" rel="noopener"><span class="ch-n">00</span><span>總覽</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/01-quickstart.md" target="_blank" rel="noopener"><span class="ch-n">01</span><span>快速開始</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/02-architecture.md" target="_blank" rel="noopener"><span class="ch-n">02</span><span>架構</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/03-step-by-step.md" target="_blank" rel="noopener"><span class="ch-n">03</span><span>逐步實作</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/04-deployment.md" target="_blank" rel="noopener"><span class="ch-n">04</span><span>部署與安裝</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/05-common-pitfalls.md" target="_blank" rel="noopener"><span class="ch-n">05</span><span>常見踩雷</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/06-customize-for-your-use-case.md" target="_blank" rel="noopener"><span class="ch-n">06</span><span>改造成你的場景</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/07-workshop-and-consulting.md" target="_blank" rel="noopener"><span class="ch-n">07</span><span>工作坊與顧問</span></a>
+      <a class="ch" href="https://github.com/yazelin/agent-skill-starter/blob/main/docs/08-from-prompt-to-skill.md" target="_blank" rel="noopener"><span class="ch-n">08</span><span>從 prompt 到 skill（對照課）</span></a>
+    </div>
+  </section>
+
+  <section id="get">
+    <div class="tag">Next</div>
+    <h2>要完整逐步？</h2>
+    <p>這頁是快速了解。<strong>逐章讀懂、確定性測試深入、踩雷清單、改造成你的場景、部署安裝</strong>都在實戰手冊（PDF）裡。</p>
+    <div class="get">
+      <div class="get-card">
+        <h3>取得實戰手冊（免費）</h3>
+        <p class="muted">留個 Email，我把完整 PDF 寄給你。</p>
+        <p><a class="btn primary" href="index.html#waitlist">下載手冊 →</a></p>
+      </div>
+      <div class="get-card">
+        <h3>看原始碼 / 自己改</h3>
+        <p class="muted">程式碼公開，直接拿去改、拿去用。</p>
+        <p><a class="btn" href="https://github.com/yazelin/agent-skill-starter" target="_blank" rel="noopener">GitHub repo →</a></p>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:14px">延伸資源 · Awesome Skills：<a href="https://github.com/anthropics/skills" target="_blank" rel="noopener">anthropics/skills</a>（官方）、<a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a>（社群）。</p>
+  </section>
+
+  <p class="footer">© 擎添工業 ChingTech · 林亞澤（Yaze Lin）· 內容可自由用於學習</p>
+</div>
+
+<script>
+(function(){
+  var KEY='skill-theme', root=document.documentElement, btn=document.getElementById('themeBtn');
+  function apply(t){ root.setAttribute('data-theme', t); btn.textContent = (t==='dark' ? '淺色' : '深色'); }
+  var saved = localStorage.getItem(KEY);
+  apply(saved || 'light');
+  btn.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+    localStorage.setItem(KEY, next); apply(next);
+  });
+})();
+</script>
+</body>
+</html>
