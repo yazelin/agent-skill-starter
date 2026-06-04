@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="640" viewBox="0 0 1600 640" role="img" aria-label="Agent Skill Starter banner">
+<defs>
+  <linearGradient id="gradB" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0d9488"/></linearGradient>
+  <linearGradient id="bggB" x1="0" y1="0" x2="0.6" y2="1">
+    <stop offset="0" stop-color="#10241f"/><stop offset="1" stop-color="#08130f"/></linearGradient>
+  <radialGradient id="glowB" cx="0.5" cy="0.5" r="0.5">
+    <stop offset="0" stop-color="#2dd4bf" stop-opacity="0.5"/>
+    <stop offset="0.55" stop-color="#0d9488" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/></radialGradient>
+  <linearGradient id="sheenB" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/>
+    <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+  <pattern id="gridB" width="32" height="32" patternUnits="userSpaceOnUse">
+    <path d="M32 0H0V32" fill="none" stroke="#2dd4bf" stroke-opacity="0.05" stroke-width="1"/></pattern>
+</defs>
+<rect width="1600" height="640" fill="url(#bggB)"/>
+<rect width="1600" height="640" fill="url(#gridB)"/>
+<circle cx="1240" cy="160" r="430" fill="url(#glowB)"/>
+<circle cx="1270" cy="330" r="250" fill="none" stroke="#2dd4bf" stroke-opacity="0.10" stroke-width="2"/>
+<circle cx="1270" cy="330" r="320" fill="none" stroke="#2dd4bf" stroke-opacity="0.06" stroke-width="2"/>
+<g transform="translate(1010 60) scale(20)" fill="#2dd4bf" opacity="0.07"><path d="M12 1l2.5 7.5L22 11l-7.5 2.5L12 21l-2.5-7.5L2 11l7.5-2.5z"/></g>
+<rect x="110" y="150" width="150" height="150" rx="36" fill="#ffffff" fill-opacity="0.04"/>
+<rect x="110" y="150" width="150" height="150" rx="36" fill="none" stroke="url(#gradB)" stroke-opacity="0.6" stroke-width="2"/>
+<rect x="110" y="150" width="150" height="150" rx="36" fill="url(#sheenB)"/>
+<g transform="translate(140 180) scale(0.9)" fill="url(#gradB)"><path d="M50 2 L61 39 L98 50 L61 61 L50 98 L39 61 L2 50 L39 39 Z"/></g>
+<text x="300" y="195" font-family="'Inter','Segoe UI','Helvetica Neue',-apple-system,system-ui,'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif" font-size="24" font-weight="600" letter-spacing="3" fill="#2dd4bf" fill-opacity="0.85">SKILL.md · SCRIPTS · AUTO-TRIGGER</text>
+<text x="300" y="266" font-family="'Inter','Segoe UI','Helvetica Neue',-apple-system,system-ui,'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif" font-size="76" font-weight="800" fill="#ffffff" letter-spacing="-1">Agent Skill<tspan dx="22" font-size="32" font-weight="700" letter-spacing="2" fill="#2dd4bf">STARTER</tspan></text>
+<rect x="302" y="292" width="120" height="4" rx="2" fill="url(#gradB)"/>
+<text x="300" y="346" font-family="'Inter','Segoe UI','Helvetica Neue',-apple-system,system-ui,'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif" font-size="30" font-weight="500" fill="#ffffff" fill-opacity="0.78">把重複又要精準的活,打包成會自動觸發的 Skill</text>
+<g font-family="'Inter','Segoe UI','Helvetica Neue',-apple-system,system-ui,'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif" font-size="20" font-weight="600" fill="#ffffff" fill-opacity="0.85">
+  <rect x="300" y="430" width="132" height="50" rx="25" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="300" y="430" width="132" height="50" rx="25" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="366" y="462" text-anchor="middle">SKILL.md</text>
+  <rect x="448" y="430" width="118" height="50" rx="25" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="448" y="430" width="118" height="50" rx="25" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="507" y="462" text-anchor="middle">Python</text>
+  <rect x="582" y="430" width="156" height="50" rx="25" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="582" y="430" width="156" height="50" rx="25" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="660" y="462" text-anchor="middle">Auto-trigger</text>
+</g>
+</svg>
