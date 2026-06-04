@@ -53,7 +53,7 @@ skill 的一半價值是「自動觸發」，但「模型有沒有正確觸發 s
 ## Landing Page CTA
 
 主要 CTA：**收到更新 / 小班開課通知**
-表單區塊以 `id="waitlist"` 為錨點，目前放 MailerLite placeholder（`data-form="REPLACE_WITH_MAILERLITE_FORM_ID"`，待手動接上真實 form id），並附 fallback 來信 `yaze.lin.j303@gmail.com`。
+表單區塊以 `id="waitlist"` 為錨點，目前放 MailerLite placeholder（`data-form="REPLACE_WITH_MAILERLITE_FORM_ID"`，待手動接上真實 form id），並附 fallback 來信 `yazelin@ching-tech.com`。
 
 ## 功能賣點
 

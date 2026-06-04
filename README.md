@@ -129,7 +129,7 @@ CI（`.github/workflows/ci.yml`）就是 `uv sync` 後跑 `client_smoke_test.py`
 
 - GitHub Pages：https://yazelin.github.io/agent-skill-starter/
 - 網頁版教學：https://yazelin.github.io/agent-skill-starter/tutorial.html
-- Contact：yaze.lin.j303@gmail.com
+- Contact：yazelin@ching-tech.com
 
 ## License
 
@@ -161,4 +161,4 @@ MIT
 - **AgentOS** — 跨 CLI 的 agent 治理平台（開發中）
 
 > 想把這個範本落地成你自己的一套 Skill，或想上一堂從 ad-hoc prompt 到打包 skill 的課？
-> 來信 yaze.lin.j303@gmail.com，或追蹤上面的連結。
+> 來信 yazelin@ching-tech.com，或追蹤上面的連結。
